@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Timer from './timer'
 const CountDown = () => {
     const [start, setStart] = useState(false)
     const [over, setOver] = useState(false)
@@ -12,57 +11,56 @@ const CountDown = () => {
     const [hour, setHour] = useState(0)
     const [minute, setMinute] = useState(0)
     const [second, setSecond] = useState(0)
-  
+
     const run = () => {
-   
+
         // console.log('started',start)
-        if(start===true){
-        if (pause || over) return;
-        if (hour === 0 && minute === 0 && second === 0) {
-            console.log('over?')
-            setOver(true)
-            setStart(false)
+        if (start === true) {
+            if (pause || over) return;
+            if (hour === 0 && minute === 0 && second === 0) {
+                console.log('over?')
+                setOver(true)
+                setStart(false)
+            }
+            else if (minute === 0 && second === 0) {
+                setHour(hour - 1)
+                setMinute(59)
+                setSecond(59)
+            } else if (second === 0) {
+                setHour(hour)
+                setMinute(minute - 1)
+                setSecond(59)
+            } else {
+                setHour(hour)
+                setMinute(minute)
+                setSecond(second - 1)
+            }
         }
-        else if (minute === 0 && second === 0) {
-            setHour(hour - 1)
-            setMinute(59)
-            setHour(59)
-        } else if (second == 0) {
-            setHour(hour)
-            setMinute(minute - 1)
-            setSecond(59)
-        } else {
-            setHour(hour)
-            setMinute(minute)
-            setSecond(second - 1)
-        }
-        }   
 
     }
 
-    const handleSetHour=(e)=>{
+    const handleSetHour = (e) => {
         setInitHour(e)
 
     }
-    const handleSetMinute=(e)=>{
+    const handleSetMinute = (e) => {
         setInitMinute(e)
-        
+
     }
-    const handleSetSecond=(e)=>{
+    const handleSetSecond = (e) => {
         setInitSecond(e)
     }
 
 
     const handleStart = () => {
         console.log('handle start', initHour, initMinute, initSecond)
-        let overflowMinute=0
-        let overflowHour=0
-            overflowMinute = Math.floor(initSecond/60)
-            overflowHour = Math.floor(initMinute/60)
-            setSecond(initSecond%60)
-            setMinute(parseInt(initMinute)+parseInt(overflowMinute))
-            setHour(parseInt(initHour)+parseInt(overflowHour))
-        console.log(minute)
+        let overflowMinute = 0
+        let overflowHour = 0
+        overflowMinute = Math.floor(initSecond / 60)
+        overflowHour = Math.floor(initMinute / 60)
+        setSecond(initSecond % 60)
+        setMinute(parseInt(initMinute % 60) + parseInt(overflowMinute))
+        setHour(parseInt(initHour) + parseInt(overflowHour))
         setStart(true)
     }
     const handleReset = () => {
@@ -74,17 +72,15 @@ const CountDown = () => {
         setStart(false)
     }
     useEffect(() => {
-        // if (true){
-            const timerID = setInterval(() => run(), 1000);
-            return () => clearInterval(timerID);
-        // }
+        const timerID = setInterval(() => run(), 1000);
+        return () => clearInterval(timerID);
     })
 
 
     return (
         <>
             <div>
-                This is countDown
+                Count Down Timer
                 <form>
                     <label>Hour:
                         <input
@@ -108,7 +104,7 @@ const CountDown = () => {
                         />
                     </label>
                     <label>
-                        <button type='button' onClick={()=>handleStart()} >start</button>
+                        <button type='button' onClick={() => handleStart()} >start</button>
                     </label>
                     <label>
                         <button type="button" onClick={() => setPause(!pause)}>{pause ? 'Resume' : 'Pause'}</button>
