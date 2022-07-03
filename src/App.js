@@ -6,7 +6,7 @@ function App() {
   return (
     <div className="App">
       <CountDown />
-      {/* <Timer minutes={1} seconds={5} /> */}
+      {/* <Timer /> */}
 
     </div>
   );
